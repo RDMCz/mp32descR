@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="mp32descR.View.MainWindow"
+        Title="mp32descR"
+        MinWidth="1280"
+        MinHeight="720"
+        FontSize="14">
+
+    <Grid ColumnDefinitions="370,*">
+        <!-- Left part of the app with path input, file loading info, ... -->
+        <StackPanel Margin="5" Spacing="5">
+            <!-- Path input -->
+            <TextBox Name="TextBoxPath" IsReadOnly="True"></TextBox>
+
+            <!-- Button duo -->
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Button Name="ButtonRevealInExplorer" Content="Reveal in explorer"
+                        Click="ButtonRevealInExplorerClicked">
+                </Button>
+                <Button Name="ButtonChangeDirectory" Grid.Column="2" Content="Change directory"
+                        Click="ButtonChangeFolderClicked">
+                </Button>
+            </Grid>
+
+            <!-- Loaded files info -->
+            <TextBlock Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
+
+            <!-- Loading files progress bar -->
+            <ProgressBar Name="ProgressBar" Height="20" Minimum="0" Maximum="1"></ProgressBar>
+        </StackPanel>
+
+        <!-- Right part of the app with output and its options -->
+        <Grid Grid.Column="1" Margin="5" RowDefinitions="*,Auto,Auto" RowSpacing="5">
+            <!-- Main output -->
+            <TextBox Name="TextBoxResult" IsReadOnly="True"></TextBox>
+
+            <!-- Format input -->
+            <Grid Grid.Row="1" ColumnDefinitions="*,30">
+                <TextBox Name="TextBoxTemplate"></TextBox>
+                <Button Grid.Column="1" Content="?"></Button>
+            </Grid>
+
+            <!-- Options and actions -->
+            <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,*,100,100,150" ColumnSpacing="5">
+                <CheckBox Name="CheckBoxTimestamps" Content="Prefix with YouTube timestamps"></CheckBox>
+
+                <CheckBox Name="CheckBoxSubdirectories" Grid.Column="1" Content="Include names of subdirectories"
+                          Margin="20,0,0,0">
+                </CheckBox>
+
+                <Button Name="ButtonSave" Grid.Column="3" Content="Save" Click="ButtonSaveClicked"></Button>
+                <Button Name="ButtonCopy" Grid.Column="4" Content="Copy" Click="ButtonCopyClicked"></Button>
+                <Button Name="ButtonGenerate" Grid.Column="5" Content="Generate" Click="ButtonGenerateClicked"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Window>
