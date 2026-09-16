@@ -197,6 +197,9 @@ public partial class MainWindow : Window
         ContextMenuTemplateHelper.Open();
     }
 
+    /// <summary>
+    /// Pastes selected user template field with curly braces into <c>TextBoxTemplate</c>
+    /// </summary>
     private void ContextMenuTemplateHelperItemClicked(object? sender, RoutedEventArgs e)
     {
         if (sender is MenuItem { Tag: TemplateField templateField })

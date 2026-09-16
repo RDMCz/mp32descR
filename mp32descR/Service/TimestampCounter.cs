@@ -2,12 +2,23 @@
 
 namespace mp32descR.Service;
 
+/// <summary>
+/// Helper struct to generate YouTube-like timestamps. Internal counter starts at 0:00,
+/// and it can be incremented and converted to string. 
+/// </summary>
 public struct TimestampCounter(TimeSpan totalDuration = new())
 {
     private TimeSpan _totalDuration = totalDuration;
 
-    public void IncrementMs(double ms) => _totalDuration += TimeSpan.FromMilliseconds(ms);
+    /// <summary>
+    /// Increments the internal counter by given milliseconds. 
+    /// </summary>
+    public void IncrementMs(double ms)
+    {
+        _totalDuration += TimeSpan.FromMilliseconds(ms);
+    }
 
+    /// <returns>YouTube-like timestamp reflecting the value of the internal counter</returns>
     public readonly override string ToString()
     {
         // <0:00 — 9:59> → <10:00 — 59:59> → <1:00:00 — 9:59:59> → <10:00:00 — 23:59:59> → <1:00:00:00 — 9:23:59:59>...

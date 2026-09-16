@@ -8,6 +8,9 @@ using mp32descR.Model;
 
 namespace mp32descR.Service;
 
+/// <summary>
+/// Load audio files from a given folder and its subfolders.
+/// </summary>
 public static class AudioFileLoader
 {
     /// <param name="folderPath">Path to folder with audio files</param>

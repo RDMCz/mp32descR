@@ -9,6 +9,9 @@ using mp32descR.Model;
 
 namespace mp32descR.Service;
 
+/// <summary>
+/// Generate description for given audio files.
+/// </summary>
 public static partial class DescriptionGenerator
 {
     /// <param name="audioFiles">Collection of audio files to generate description from</param>
@@ -61,12 +64,11 @@ public static partial class DescriptionGenerator
         return result.ToString();
     }
 
-    // .: Replace {title}, {artist}, ... in `template` by {0}, {1}, ... :.
-    // .:===============================================================:.
-
-    [GeneratedRegex("{([^{}]*)}")]
-    private static partial Regex TextInCurlyBracesRegex();
-
+    /// <summary>
+    /// Converts template string from the GUI to string that can be used in string.Format.
+    /// </summary>
+    /// <param name="userTemplate">Template string from user, that contains {Title}, {Artist} etc.</param>
+    /// <returns><c>userTemplate</c> with {Title}, {Artist} etc. converted to {0}, {1} etc.</returns>
     private static string TemplateToFormatString(string userTemplate)
     {
         return TextInCurlyBracesRegex().Replace(
@@ -75,17 +77,25 @@ public static partial class DescriptionGenerator
         );
     }
 
+    /// <summary>
+    /// Regex used in <c>TemplateToFormatString</c> to replace {Title}, {Artist} etc. by {0}, {1} etc.
+    /// so it can be used in String.Format.
+    /// </summary>
+    [GeneratedRegex("{([^{}]*)}")]
+    private static partial Regex TextInCurlyBracesRegex();
 
+    /// <param name="userField">One field from the template string, like "Title" or "Artist"</param>
+    /// <returns>Substring like "{0}", that will be replaced in string.Format</returns>
     private static string TemplateFieldToFormatStringField(string userField)
     {
         return Enum.TryParse<TemplateField>(userField, ignoreCase: true, out var templateField)
             ? $"{{{(int)templateField}}}" // e.g. {0}
-            : $"{{{{{userField}}}}}"; // Put in second pair of braces so it does not crash the String.Format
+            : $"{{{{{userField}}}}}"; // Put in second pair of braces so it does not crash the string.Format
     }
 
-    // .: Use converted template to get appropriate string for a track :.
-    // .:==============================================================:.
-
+    /// <summary>
+    /// Converts <c>TemplateField</c> to function that gets appropriate attribute from ATL's <c>Track</c>.
+    /// </summary>
     private static readonly Dictionary<TemplateField, Func<Track, object?>> TemplateFieldToTrackGetter = new()
     {
         [TemplateField.Album] = t => t.Album,
@@ -100,8 +110,13 @@ public static partial class DescriptionGenerator
         [TemplateField.Year] = t => t.Year,
     };
 
+    /// <summary>
+    /// Creates final string that will be used in the GUI output
+    /// for <c>track</c> according to <c>stringFormatTemplate</c>.
+    /// </summary>
     private static string ApplyFormatString(Track track, string stringFormatTemplate)
     {
+        // Create array of values that will be used to replace {0}, {1} etc. for current Track
         var values = Enum.GetValues<TemplateField>().Select(templateField =>
         {
             if (TemplateFieldToTrackGetter.TryGetValue(templateField, out var getter))
@@ -115,9 +130,9 @@ public static partial class DescriptionGenerator
         return string.Format(stringFormatTemplate, values);
     }
 
-    // .: Helper methods :.
-    // .:================:.
-
+    /// <summary>
+    /// Used to get a path string for given file's (parent) folder. Always uses forward slashes for consistency.
+    /// </summary>
     private static string RemoveLastItemFromPathAndUseFwdSlash(string input)
     {
         return string.Join("/", input.Split(Path.DirectorySeparatorChar)[..^1]);

@@ -39,6 +39,7 @@
                 <TextBox Name="TextBoxTemplate"></TextBox>
                 <Button Grid.Column="1" Content="?" Click="ButtonTemplateHelperClicked">
                     <Button.ContextMenu>
+                        <!-- Button's context menu options are set in code -->
                         <ContextMenu Name="ContextMenuTemplateHelper" FontSize="14"></ContextMenu>
                     </Button.ContextMenu>
                 </Button>
