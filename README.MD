@@ -1,10 +1,14 @@
+# ![icon](./mp32descR/Asset/Icon/icon.ico) mp32descR
+
 > [!WARNING]
 > Under construction
 
 * TODO
   * [x] Použít písmo, které má alespoň monospace čísla
   * [x] {Duration} v sekundách nic moc
-  * [ ] App icon, try build on Win & Lin
+  * [x] App icon
+  * [x] Windows build
+  * [ ] Linux build
 
 ## Dependencies
 
