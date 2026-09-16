@@ -90,7 +90,7 @@ public static partial class DescriptionGenerator
     {
         return Enum.TryParse<TemplateField>(userField, ignoreCase: true, out var templateField)
             ? $"{{{(int)templateField}}}" // e.g. {0}
-            : $"{{{{{userField}}}}}"; // Put in second pair of braces so it does not crash the string.Format
+            : $"{{{userField}}}"; // Do not modify unknown field
     }
 
     /// <summary>
@@ -127,7 +127,14 @@ public static partial class DescriptionGenerator
             return "UndefinedTemplateFieldGetterError";
         }).ToArray();
 
-        return string.Format(stringFormatTemplate, values);
+        try
+        {
+            return string.Format(stringFormatTemplate, values);
+        }
+        catch (Exception ex)
+        {
+            return $"{ex.Message}\n\n(Use double curly braces to escape them: {{{{something}}}} → {{something}}).\n";
+        }
     }
 
     /// <summary>

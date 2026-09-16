@@ -60,6 +60,7 @@ public partial class MainWindow : Window
 
         var launcher = topLevel.Launcher;
         launcher.LaunchDirectoryInfoAsync(new DirectoryInfo(pathToOpen));
+        // Not awaiting async because no need for result?
     }
 
     /// <summary>
@@ -141,20 +142,11 @@ public partial class MainWindow : Window
     /// <summary>
     /// Inserts content of <c>TextBoxResult</c> into user's clipboard
     /// </summary>
-    private async void ButtonCopyClicked(object? sender, RoutedEventArgs e)
+    private void ButtonCopyClicked(object? sender, RoutedEventArgs e)
     {
-        try
-        {
-            var clipboard = GetTopLevel(this)?.Clipboard;
-            if (clipboard is not null)
-            {
-                await clipboard.SetTextAsync(TextBoxResult.Text);
-            }
-        }
-        catch (Exception ex)
-        {
-            // ignored for now
-        }
+        var clipboard = GetTopLevel(this)?.Clipboard;
+        clipboard?.SetTextAsync(TextBoxResult.Text);
+        // Not awaiting async because no need for result?
     }
 
     /// <summary>
@@ -162,7 +154,7 @@ public partial class MainWindow : Window
     /// </summary>
     private async void ButtonSaveClicked(object? sender, RoutedEventArgs e)
     {
-        try
+        try // Pokémon catch for async void
         {
             var topLevel = GetTopLevel(this);
             if (topLevel is null) return;
@@ -185,7 +177,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            // ignored for now
+            TextBlockFilesInfo.Text = ex.Message;
         }
     }
 
