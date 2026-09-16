@@ -103,7 +103,7 @@ public static partial class DescriptionGenerator
         [TemplateField.Bitrate] = t => t.Bitrate,
         [TemplateField.Comment] = t => t.Comment,
         [TemplateField.DiscNumber] = t => t.DiscNumber,
-        [TemplateField.Duration] = t => t.Duration,
+        [TemplateField.Duration] = t => TimeSpan.FromSeconds(t.Duration).ToString("g"),
         [TemplateField.Genre] = t => t.Genre,
         [TemplateField.Title] = t => t.Title,
         [TemplateField.TrackNumber] = t => t.TrackNumber,
