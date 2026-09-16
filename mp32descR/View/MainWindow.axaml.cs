@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ATL;
 using Avalonia.Controls;
 using Avalonia.Input.Platform;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using mp32descR.Model;
 using mp32descR.Service;
 
 namespace mp32descR.View;
@@ -24,8 +26,25 @@ public partial class MainWindow : Window
         ButtonRevealInExplorer.IsEnabled = false; // There's no path on app's start
         ButtonCopy.IsEnabled = false; // Nothing to copy on app's start
         ButtonSave.IsEnabled = false; // Nothing to save on app's start
-        TextBoxTemplate.Text = "{artist} – {year} – {trackNumber} – {title}"; // Default template
         ProgressBar.IsVisible = false; // ProgressBar is only visible when loading new files
+
+        // Default template
+        TextBoxTemplate.Text = $"{{{TemplateField.Artist}}}" +
+                               $" – {{{TemplateField.Year}}}" +
+                               $" – {{{TemplateField.TrackNumber}}}" +
+                               $" – {{{TemplateField.Title}}}";
+
+        // = Set the TemplateHelper button context menu =
+        var contextMenuItems = Enum.GetValues<TemplateField>()
+            .Select(el => new MenuItem { Header = el, Tag = el })
+            .ToList();
+
+        foreach (var contextMenuItem in contextMenuItems)
+        {
+            contextMenuItem.Click += ContextMenuTemplateHelperItemClicked;
+        }
+
+        ContextMenuTemplateHelper.ItemsSource = contextMenuItems;
     }
 
     /// <summary>
@@ -167,6 +186,22 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             // ignored for now
+        }
+    }
+
+    /// <summary>
+    /// Shows button's context menu. 
+    /// </summary>
+    private void ButtonTemplateHelperClicked(object? sender, RoutedEventArgs e)
+    {
+        ContextMenuTemplateHelper.Open();
+    }
+
+    private void ContextMenuTemplateHelperItemClicked(object? sender, RoutedEventArgs e)
+    {
+        if (sender is MenuItem { Tag: TemplateField templateField })
+        {
+            TextBoxTemplate.Text += $"{{{templateField}}}";
         }
     }
 }

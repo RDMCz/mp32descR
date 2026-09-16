@@ -37,7 +37,11 @@
             <!-- Format input -->
             <Grid Grid.Row="1" ColumnDefinitions="*,30">
                 <TextBox Name="TextBoxTemplate"></TextBox>
-                <Button Grid.Column="1" Content="?"></Button>
+                <Button Grid.Column="1" Content="?" Click="ButtonTemplateHelperClicked">
+                    <Button.ContextMenu>
+                        <ContextMenu Name="ContextMenuTemplateHelper" FontSize="14"></ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </Grid>
 
             <!-- Options and actions -->

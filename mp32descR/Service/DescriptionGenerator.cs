@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ATL;
+using mp32descR.Model;
 
 namespace mp32descR.Service;
 
@@ -72,31 +75,44 @@ public static partial class DescriptionGenerator
         );
     }
 
-    private static string TemplateFieldToFormatStringField(string userField) => userField switch
+
+    private static string TemplateFieldToFormatStringField(string userField)
     {
-        // Numbers are in order of arguments in `ApplyFormatString`'s String.Format
-        "title" => "{0}",
-        "artist" => "{1}",
-        "album" => "{2}",
-        "year" => "{3}",
-        "trackNumber" => "{4}",
-        "discNumber" => "{5}",
-        "genre" => "{6}",
-        "comment" => "{7}",
-        "duration" => "{8}",
-        "bitrate" => "{9}",
-        _ => $"{{{{{userField}}}}}", // Put in second pair of braces so it does not crash the String.Format
-    };
+        return Enum.TryParse<TemplateField>(userField, ignoreCase: true, out var templateField)
+            ? $"{{{(int)templateField}}}" // e.g. {0}
+            : $"{{{{{userField}}}}}"; // Put in second pair of braces so it does not crash the String.Format
+    }
 
     // .: Use converted template to get appropriate string for a track :.
     // .:==============================================================:.
 
-    private static string ApplyFormatString(Track t, string stringFormatTemplate)
+    private static readonly Dictionary<TemplateField, Func<Track, object?>> TemplateFieldToTrackGetter = new()
     {
-        return string.Format(
-            stringFormatTemplate,
-            t.Title, t.Artist, t.Album, t.Year, t.TrackNumber, t.DiscNumber, t.Genre, t.Comment, t.Duration, t.Bitrate
-        );
+        [TemplateField.Album] = t => t.Album,
+        [TemplateField.Artist] = t => t.Artist,
+        [TemplateField.Bitrate] = t => t.Bitrate,
+        [TemplateField.Comment] = t => t.Comment,
+        [TemplateField.DiscNumber] = t => t.DiscNumber,
+        [TemplateField.Duration] = t => t.Duration,
+        [TemplateField.Genre] = t => t.Genre,
+        [TemplateField.Title] = t => t.Title,
+        [TemplateField.TrackNumber] = t => t.TrackNumber,
+        [TemplateField.Year] = t => t.Year,
+    };
+
+    private static string ApplyFormatString(Track track, string stringFormatTemplate)
+    {
+        var values = Enum.GetValues<TemplateField>().Select(templateField =>
+        {
+            if (TemplateFieldToTrackGetter.TryGetValue(templateField, out var getter))
+            {
+                return getter(track);
+            }
+
+            return "UndefinedTemplateFieldGetterError";
+        }).ToArray();
+
+        return string.Format(stringFormatTemplate, values);
     }
 
     // .: Helper methods :.

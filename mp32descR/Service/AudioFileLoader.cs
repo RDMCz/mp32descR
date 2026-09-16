@@ -40,7 +40,7 @@ public static class AudioFileLoader
 
             foreach (var filePath in files)
             {
-                var extension = Path.GetExtension(filePath).ToLower();
+                var extension = Path.GetExtension(filePath).ToLowerInvariant();
                 if (allowedExtensions.Contains(extension))
                 {
                     resultCollection.Add(new Track(filePath));
