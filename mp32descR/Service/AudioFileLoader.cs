@@ -73,7 +73,7 @@ public static class AudioFileLoader
 
             foreach (var pair in allowedExtensionsCount)
             {
-                resultTextBuilder.Append($"\n{pair.Key} × {pair.Value}");
+                resultTextBuilder.Append($"\n{pair.Key.PadRight(5)} × {pair.Value}");
             }
 
             // ReSharper disable once InvertIf

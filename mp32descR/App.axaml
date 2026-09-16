@@ -4,7 +4,14 @@
              RequestedThemeVariant="Light">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+    <Application.Resources>
+        <FontFamily x:Key="InconsolataFont">avares://mp32descR/Assets/Fonts#Inconsolata</FontFamily>
+    </Application.Resources>
+
     <Application.Styles>
         <SimpleTheme />
+        <Style Selector="ContentPresenter">
+            <Setter Property="FontFamily" Value="{StaticResource InconsolataFont}" />
+        </Style>
     </Application.Styles>
 </Application>

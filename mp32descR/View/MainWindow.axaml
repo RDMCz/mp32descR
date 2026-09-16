@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="mp32descR.View.MainWindow"
         Title="mp32descR"
-        MinWidth="1280"
+        MinWidth="1309"
         MinHeight="720"
-        FontSize="14">
+        FontSize="16">
 
     <Grid ColumnDefinitions="370,*">
         <!-- Left part of the app with path input, file loading info, ... -->
@@ -40,7 +40,7 @@
                 <Button Grid.Column="1" Content="?" Click="ButtonTemplateHelperClicked">
                     <Button.ContextMenu>
                         <!-- Button's context menu options are set in code -->
-                        <ContextMenu Name="ContextMenuTemplateHelper" FontSize="14"></ContextMenu>
+                        <ContextMenu Name="ContextMenuTemplateHelper" FontSize="16"></ContextMenu>
                     </Button.ContextMenu>
                 </Button>
             </Grid>
