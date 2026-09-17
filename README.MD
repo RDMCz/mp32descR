@@ -11,7 +11,7 @@
   * [x] Linux build
   * [ ] About
   * [ ] GitHub Readme
-  * [ ] Duplicate checker
+  * [x] Duplicate checker
 
 ## Dependencies
 

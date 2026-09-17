@@ -28,6 +28,7 @@ public partial class MainWindow : Window
         ButtonSave.IsEnabled = false; // Nothing to save on app's start
         ProgressBar.Value = 0;
         ProgressBar.ShowProgressText = false; // Show progress only when loading something
+        GroupBoxDuplicateChecker.IsEnabled = false;
 
         // Default template
         TextBoxTemplate.Text = $"{{{TemplateField.Artist}}}" +
@@ -89,6 +90,7 @@ public partial class MainWindow : Window
             TextBoxResult.Text = ""; // User probably doesn't need the old result anymore
             ProgressBar.Value = 0;
             ProgressBar.ShowProgressText = true;
+            GroupBoxDuplicateChecker.IsEnabled = false;
 
             // Get the path from dialog and start importing files
             var folderPath = folders[0].Path.LocalPath;
@@ -111,6 +113,7 @@ public partial class MainWindow : Window
             ButtonGenerate.IsEnabled = true;
             ProgressBar.Value = 0;
             ProgressBar.ShowProgressText = false;
+            GroupBoxDuplicateChecker.IsEnabled = true;
         }
         catch (Exception ex)
         {
@@ -201,5 +204,22 @@ public partial class MainWindow : Window
         {
             TextBoxTemplate.Text += $"{{{templateField}}}";
         }
+    }
+
+    /// <summary>
+    /// Fills <c>TextBoxResult</c> with info about files in <c>_audioFiles</c> that don't have unique title.
+    /// </summary>
+    private void ButtonDuplicateCheckerClicked(object? sender, RoutedEventArgs e)
+    {
+        if (_audioFiles.Count == 0)
+        {
+            TextBoxResult.Text = "Choose a directory with some audio files first.";
+            return;
+        }
+
+        TextBoxResult.Text = DuplicateChecker.GetDuplicatesInfo(
+            _audioFiles,
+            CheckBoxDuplicateCheckerBracketsIgnore.IsChecked ?? false
+        );
     }
 }

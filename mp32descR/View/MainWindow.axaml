@@ -16,7 +16,7 @@
 
         <Grid ColumnDefinitions="370,*">
             <!-- Left part of the app with path input, file loading info, ... -->
-            <Grid Margin="5" RowDefinitions="Auto,Auto,*,Auto" RowSpacing="5">
+            <Grid Margin="5" RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="5">
                 <!-- Path input -->
                 <TextBox Name="TextBoxPath" IsReadOnly="True"></TextBox>
 
@@ -33,8 +33,18 @@
                 <!-- Loaded files info -->
                 <TextBlock Grid.Row="2" Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
 
+                <!-- Duplicate checker -->
+                <GroupBox Grid.Row="3" Name="GroupBoxDuplicateChecker" Header="Duplicate checker" Padding="5">
+                    <StackPanel Spacing="5">
+                        <CheckBox Name="CheckBoxDuplicateCheckerBracketsIgnore"
+                                  Content="Ignore the text in parentheses">
+                        </CheckBox>
+                        <Button Content="Check" Click="ButtonDuplicateCheckerClicked"></Button>
+                    </StackPanel>
+                </GroupBox>
+
                 <!-- Loading files progress bar -->
-                <ProgressBar Grid.Row="3" Name="ProgressBar" Minimum="0" Height="18" Margin="5,0,0,5"
+                <ProgressBar Grid.Row="4" Name="ProgressBar" Minimum="0" Height="18" Margin="0,4,0,5"
                              Foreground="#8c42ad" Background="#ebcff8"
                              ShowProgressText="True" ProgressTextFormat="{}{0}/{3} ({1:0}%)	">
                 </ProgressBar>
@@ -42,8 +52,10 @@
 
             <!-- Right part of the app with output and its options -->
             <Grid Grid.Column="1" Margin="5" RowDefinitions="*,Auto,Auto" RowSpacing="5">
-                <!-- Main output -->
-                <TextBox Name="TextBoxResult" IsReadOnly="True"></TextBox>
+                <!-- Main output :: RESULT -->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <TextBox Name="TextBoxResult" IsReadOnly="True"></TextBox>
+                </ScrollViewer>
 
                 <!-- Format input -->
                 <Grid Grid.Row="1" ColumnDefinitions="*,30">
