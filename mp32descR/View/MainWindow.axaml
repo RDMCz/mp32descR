@@ -7,58 +7,69 @@
         FontSize="16"
         Icon="/Asset/Icon/icon.ico">
 
-    <Grid ColumnDefinitions="370,*">
-        <!-- Left part of the app with path input, file loading info, ... -->
-        <StackPanel Margin="5" Spacing="5">
-            <!-- Path input -->
-            <TextBox Name="TextBoxPath" IsReadOnly="True"></TextBox>
+    <DockPanel>
 
-            <!-- Button duo -->
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Button Name="ButtonRevealInExplorer" Content="Reveal in explorer"
-                        Click="ButtonRevealInExplorerClicked">
-                </Button>
-                <Button Name="ButtonChangeDirectory" Grid.Column="2" Content="Change directory"
-                        Click="ButtonChangeFolderClicked">
-                </Button>
-            </Grid>
+        <Menu DockPanel.Dock="Top" Background="#f2f2f2">
+            <MenuItem Header="Tools">
+                <MenuItem Header="Duplicate checker"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About"></MenuItem>
+            </MenuItem>
+        </Menu>
 
-            <!-- Loaded files info -->
-            <TextBlock Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
+        <Grid ColumnDefinitions="370,*">
+            <!-- Left part of the app with path input, file loading info, ... -->
+            <StackPanel Margin="5" Spacing="5">
+                <!-- Path input -->
+                <TextBox Name="TextBoxPath" IsReadOnly="True"></TextBox>
 
-            <!-- Loading files progress bar -->
-            <ProgressBar Name="ProgressBar" Height="20" Minimum="0" Maximum="1"></ProgressBar>
-        </StackPanel>
+                <!-- Button duo -->
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Button Name="ButtonRevealInExplorer" Content="Reveal in explorer"
+                            Click="ButtonRevealInExplorerClicked">
+                    </Button>
+                    <Button Name="ButtonChangeDirectory" Grid.Column="2" Content="Change directory"
+                            Click="ButtonChangeFolderClicked">
+                    </Button>
+                </Grid>
 
-        <!-- Right part of the app with output and its options -->
-        <Grid Grid.Column="1" Margin="5" RowDefinitions="*,Auto,Auto" RowSpacing="5">
-            <!-- Main output -->
-            <TextBox Name="TextBoxResult" IsReadOnly="True"></TextBox>
+                <!-- Loaded files info -->
+                <TextBlock Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
 
-            <!-- Format input -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,30">
-                <TextBox Name="TextBoxTemplate"></TextBox>
-                <Button Grid.Column="1" Content="?" Click="ButtonTemplateHelperClicked">
-                    <Button.ContextMenu>
-                        <!-- Button's context menu options are set in code -->
-                        <ContextMenu Name="ContextMenuTemplateHelper" FontSize="16"></ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-            </Grid>
+                <!-- Loading files progress bar -->
+                <ProgressBar Name="ProgressBar" Height="20" Minimum="0" Maximum="1"></ProgressBar>
+            </StackPanel>
 
-            <!-- Options and actions -->
-            <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,*,100,100,150" ColumnSpacing="5">
-                <CheckBox Name="CheckBoxTimestamps" Content="Prefix with YouTube timestamps"></CheckBox>
+            <!-- Right part of the app with output and its options -->
+            <Grid Grid.Column="1" Margin="5" RowDefinitions="*,Auto,Auto" RowSpacing="5">
+                <!-- Main output -->
+                <TextBox Name="TextBoxResult" IsReadOnly="True"></TextBox>
 
-                <CheckBox Name="CheckBoxSubdirectories" Grid.Column="1" Content="Include names of subdirectories"
-                          Margin="20,0,0,0">
-                </CheckBox>
+                <!-- Format input -->
+                <Grid Grid.Row="1" ColumnDefinitions="*,30">
+                    <TextBox Name="TextBoxTemplate"></TextBox>
+                    <Button Grid.Column="1" Content="?" Click="ButtonTemplateHelperClicked">
+                        <Button.ContextMenu>
+                            <!-- Button's context menu options are set in code -->
+                            <ContextMenu Name="ContextMenuTemplateHelper" FontSize="16"></ContextMenu>
+                        </Button.ContextMenu>
+                    </Button>
+                </Grid>
 
-                <Button Name="ButtonSave" Grid.Column="3" Content="Save" Click="ButtonSaveClicked"></Button>
-                <Button Name="ButtonCopy" Grid.Column="4" Content="Copy" Click="ButtonCopyClicked"></Button>
-                <Button Name="ButtonGenerate" Grid.Column="5" Content="Generate" Click="ButtonGenerateClicked"></Button>
+                <!-- Options and actions -->
+                <Grid Grid.Row="2" ColumnDefinitions="Auto,Auto,*,100,100,150" ColumnSpacing="5">
+                    <CheckBox Name="CheckBoxTimestamps" Content="Prefix with YouTube timestamps"></CheckBox>
+
+                    <CheckBox Name="CheckBoxSubdirectories" Grid.Column="1" Content="Include names of subdirectories"
+                              Margin="20,0,0,0">
+                    </CheckBox>
+
+                    <Button Name="ButtonSave" Grid.Column="3" Content="Save" Click="ButtonSaveClicked"></Button>
+                    <Button Name="ButtonCopy" Grid.Column="4" Content="Copy" Click="ButtonCopyClicked"></Button>
+                    <Button Name="ButtonGenerate" Grid.Column="5" Content="Generate" Click="ButtonGenerateClicked"></Button>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
-
+    </DockPanel>
 </Window>

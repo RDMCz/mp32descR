@@ -20,7 +20,7 @@
 * [Zeugma440/atldotnet](https://github.com/Zeugma440/atldotnet) ([MIT](https://github.com/Zeugma440/atldotnet/blob/main/LICENSE))
 * [Inconsolata](https://levien.com/type/myfonts/inconsolata.html) ([SIL Open Font License](https://github.com/google/fonts/blob/main/ofl/inconsolata/OFL.txt))
 
-## Building
+## Building locally
 
 Prerequisite: [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
@@ -30,4 +30,12 @@ Prerequisite: [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/1
 make
 cd PUBLISHED/
 ./mp32descR
+```
+
+### Build & run on Windows
+
+```powershell
+.\makew.ps1
+cd .\PUBLISHED\
+.\mp32descR.exe
 ```
