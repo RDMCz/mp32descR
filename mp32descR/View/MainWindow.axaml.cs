@@ -222,4 +222,14 @@ public partial class MainWindow : Window
             CheckBoxDuplicateCheckerBracketsIgnore.IsChecked ?? false
         );
     }
+
+    /// <summary>
+    /// Shows a dialog with basic info about this program.
+    /// </summary>
+    private void MenuItemAboutClicked(object? sender, RoutedEventArgs e)
+    {
+        var dialog = new AboutDialog();
+        dialog.ShowDialog(this);
+        // Not awaiting async because no need for result?
+    }
 }

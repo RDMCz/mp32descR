@@ -10,7 +10,7 @@
 
         <Menu DockPanel.Dock="Top" Background="#f2f2f2">
             <MenuItem Header="Help">
-                <MenuItem Header="About"></MenuItem>
+                <MenuItem Header="About" Click="MenuItemAboutClicked"></MenuItem>
             </MenuItem>
         </Menu>
 

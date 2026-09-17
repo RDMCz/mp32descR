@@ -9,7 +9,7 @@
   * [x] App icon
   * [x] Windows build
   * [x] Linux build
-  * [ ] About
+  * [x] About
   * [ ] GitHub Readme
   * [x] Duplicate checker
 
