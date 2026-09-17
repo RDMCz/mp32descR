@@ -26,7 +26,8 @@ public partial class MainWindow : Window
         ButtonRevealInExplorer.IsEnabled = false; // There's no path on app's start
         ButtonCopy.IsEnabled = false; // Nothing to copy on app's start
         ButtonSave.IsEnabled = false; // Nothing to save on app's start
-        ProgressBar.IsVisible = false; // ProgressBar is only visible when loading new files
+        ProgressBar.Value = 0;
+        ProgressBar.ShowProgressText = false; // Show progress only when loading something
 
         // Default template
         TextBoxTemplate.Text = $"{{{TemplateField.Artist}}}" +
@@ -79,14 +80,15 @@ public partial class MainWindow : Window
             var folders = await storage.OpenFolderPickerAsync(new FolderPickerOpenOptions { AllowMultiple = false });
             if (folders.Count <= 0) return;
 
-            // Importing files may take a while, so disable GUI and show ProgressBar
+            // Importing files may take a while, so disable GUI and reset ProgressBar
             ButtonRevealInExplorer.IsEnabled = false;
             ButtonChangeDirectory.IsEnabled = false;
             ButtonSave.IsEnabled = false;
             ButtonCopy.IsEnabled = false;
             ButtonGenerate.IsEnabled = false;
             TextBoxResult.Text = ""; // User probably doesn't need the old result anymore
-            ProgressBar.IsVisible = true;
+            ProgressBar.Value = 0;
+            ProgressBar.ShowProgressText = true;
 
             // Get the path from dialog and start importing files
             var folderPath = folders[0].Path.LocalPath;
@@ -94,8 +96,8 @@ public partial class MainWindow : Window
             // Run async and update ProgressBar
             Progress<Tuple<int, int>> progress = new(tup =>
             {
-                TextBlockFilesInfo.Text = $"{tup.Item1}/{tup.Item2}";
-                ProgressBar.Value = (double)tup.Item1 / tup.Item2;
+                ProgressBar.Value = tup.Item1;
+                ProgressBar.Maximum = tup.Item2;
             });
 
             var result = await Task.Run(() => AudioFileLoader.GetFolderAudioFilesWithProgress(folderPath, progress));
@@ -103,11 +105,12 @@ public partial class MainWindow : Window
             TextBlockFilesInfo.Text = result.Info;
 
             // Import done. Enable previously disabled buttons except for Copy and Save, these will be enabled
-            // when user generates something (no need to copy/save empty string) and hide progress bar.
+            // when user generates something (no need to copy/save empty string) and reset progress bar.
             ButtonRevealInExplorer.IsEnabled = true;
             ButtonChangeDirectory.IsEnabled = true;
             ButtonGenerate.IsEnabled = true;
-            ProgressBar.IsVisible = false;
+            ProgressBar.Value = 0;
+            ProgressBar.ShowProgressText = false;
         }
         catch (Exception ex)
         {

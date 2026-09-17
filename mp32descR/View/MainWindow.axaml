@@ -6,13 +6,9 @@
         MinHeight="720"
         FontSize="16"
         Icon="/Asset/Icon/icon.ico">
-
     <DockPanel>
 
         <Menu DockPanel.Dock="Top" Background="#f2f2f2">
-            <MenuItem Header="Tools">
-                <MenuItem Header="Duplicate checker"></MenuItem>
-            </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About"></MenuItem>
             </MenuItem>
@@ -20,12 +16,12 @@
 
         <Grid ColumnDefinitions="370,*">
             <!-- Left part of the app with path input, file loading info, ... -->
-            <StackPanel Margin="5" Spacing="5">
+            <Grid Margin="5" RowDefinitions="Auto,Auto,*,Auto" RowSpacing="5">
                 <!-- Path input -->
                 <TextBox Name="TextBoxPath" IsReadOnly="True"></TextBox>
 
                 <!-- Button duo -->
-                <Grid ColumnDefinitions="Auto,*,Auto">
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
                     <Button Name="ButtonRevealInExplorer" Content="Reveal in explorer"
                             Click="ButtonRevealInExplorerClicked">
                     </Button>
@@ -35,11 +31,14 @@
                 </Grid>
 
                 <!-- Loaded files info -->
-                <TextBlock Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
+                <TextBlock Grid.Row="2" Name="TextBlockFilesInfo" TextWrapping="Wrap"></TextBlock>
 
                 <!-- Loading files progress bar -->
-                <ProgressBar Name="ProgressBar" Height="20" Minimum="0" Maximum="1"></ProgressBar>
-            </StackPanel>
+                <ProgressBar Grid.Row="3" Name="ProgressBar" Minimum="0" Height="18" Margin="5,0,0,5"
+                             Foreground="#8c42ad" Background="#ebcff8"
+                             ShowProgressText="True" ProgressTextFormat="{}{0}/{3} ({1:0}%)	">
+                </ProgressBar>
+            </Grid>
 
             <!-- Right part of the app with output and its options -->
             <Grid Grid.Column="1" Margin="5" RowDefinitions="*,Auto,Auto" RowSpacing="5">
